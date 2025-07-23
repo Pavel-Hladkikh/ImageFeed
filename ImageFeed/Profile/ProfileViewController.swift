@@ -118,7 +118,7 @@ final class ProfileViewController: UIViewController {
     
 
     private func configureData() {
-        avatarImageView.image = UIImage(named: "avatar")
+        avatarImageView.image = UIImage(named: "Avatar")
         nameLabel.text = "Екатерина Новикова"
         loginNameLabel.text = "@ekaterina_nov"
         descriptionLabel.text = "Hello, World!"
