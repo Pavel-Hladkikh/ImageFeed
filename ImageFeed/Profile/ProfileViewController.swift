@@ -14,7 +14,7 @@ final class ProfileViewController: UIViewController {
     private let logoutButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "logout_button"), for: .normal)
-        button.tintColor = .systemRed
+        button.tintColor = UIColor(red: 0xF5/255.0, green: 0x6B/255.0, blue: 0x6C/255.0, alpha: 1)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -29,8 +29,8 @@ final class ProfileViewController: UIViewController {
 
     private let loginNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 13)
-        label.textColor = .white
+        label.font = .systemFont(ofSize: 13, weight: .regular)
+        label.textColor = UIColor(red: 0xAE/255.0, green: 0xAF/255.0, blue: 0xB4/255.0, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -49,13 +49,10 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
 
         
-        view.backgroundColor = UIColor(
-            red:   26.0/255.0,
-            green: 27.0/255.0,
-            blue:  34.0/255.0,
-            alpha: 1.0
-        )
-
+        view.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
+        
+        
+        
         setupSubviews()
         setupConstraints()
         setupActions()
@@ -114,7 +111,7 @@ final class ProfileViewController: UIViewController {
 
     @objc
     private func didTapLogoutButton() {
-        // просто выводим сообщение в консоль
+        
         print("Кнопку Logout нажали")
     }
 
