@@ -30,6 +30,27 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		840CB0E62E1E851500F07C6D /* Exceptions for "ImageFeedTests" folder in "ImageFeed" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ImageFeedTests.swift,
+			);
+			target = 848E27252E04216B0027436B /* ImageFeed */;
+		};
+		840CB0E72E1E851500F07C6D /* Exceptions for "ImageFeedTests" folder in "ImageFeedTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ImageFeedTests.swift,
+			);
+			target = 848E273B2E04216D0027436B /* ImageFeedTests */;
+		};
+		840CB1562E21297800F07C6D /* Exceptions for "ImageFeed" folder in "ImageFeed" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 848E27252E04216B0027436B /* ImageFeed */;
+		};
 		845F3B462E15552D000163B4 /* Exceptions for "ImageFeedUITests" folder in "ImageFeed" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -46,30 +67,26 @@
 			);
 			target = 848E27452E04216D0027436B /* ImageFeedUITests */;
 		};
-		845F3B4F2E155534000163B4 /* Exceptions for "ImageFeedTests" folder in "ImageFeed" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				ImageFeedTests.swift,
-			);
-			target = 848E27252E04216B0027436B /* ImageFeed */;
-		};
-		845F3B502E155534000163B4 /* Exceptions for "ImageFeedTests" folder in "ImageFeedTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				ImageFeedTests.swift,
-			);
-			target = 848E273B2E04216D0027436B /* ImageFeedTests */;
-		};
-		848E274E2E04216D0027436B /* Exceptions for "ImageFeed" folder in "ImageFeed" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 848E27252E04216B0027436B /* ImageFeed */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		840CB0E42E1E851500F07C6D /* ImageFeedTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				840CB0E62E1E851500F07C6D /* Exceptions for "ImageFeedTests" folder in "ImageFeed" target */,
+				840CB0E72E1E851500F07C6D /* Exceptions for "ImageFeedTests" folder in "ImageFeedTests" target */,
+			);
+			path = ImageFeedTests;
+			sourceTree = "<group>";
+		};
+		840CB14D2E21297800F07C6D /* ImageFeed */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				840CB1562E21297800F07C6D /* Exceptions for "ImageFeed" folder in "ImageFeed" target */,
+			);
+			path = ImageFeed;
+			sourceTree = "<group>";
+		};
 		845F3B432E15552D000163B4 /* ImageFeedUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -77,23 +94,6 @@
 				845F3B472E15552D000163B4 /* Exceptions for "ImageFeedUITests" folder in "ImageFeedUITests" target */,
 			);
 			path = ImageFeedUITests;
-			sourceTree = "<group>";
-		};
-		845F3B4D2E155534000163B4 /* ImageFeedTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				845F3B4F2E155534000163B4 /* Exceptions for "ImageFeedTests" folder in "ImageFeed" target */,
-				845F3B502E155534000163B4 /* Exceptions for "ImageFeedTests" folder in "ImageFeedTests" target */,
-			);
-			path = ImageFeedTests;
-			sourceTree = "<group>";
-		};
-		848E27282E04216B0027436B /* ImageFeed */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				848E274E2E04216D0027436B /* Exceptions for "ImageFeed" folder in "ImageFeed" target */,
-			);
-			path = ImageFeed;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -126,9 +126,9 @@
 		848E271D2E04216B0027436B = {
 			isa = PBXGroup;
 			children = (
-				848E27282E04216B0027436B /* ImageFeed */,
+				840CB14D2E21297800F07C6D /* ImageFeed */,
+				840CB0E42E1E851500F07C6D /* ImageFeedTests */,
 				845F3B432E15552D000163B4 /* ImageFeedUITests */,
-				845F3B4D2E155534000163B4 /* ImageFeedTests */,
 				848E27272E04216B0027436B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -159,9 +159,9 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				840CB0E42E1E851500F07C6D /* ImageFeedTests */,
+				840CB14D2E21297800F07C6D /* ImageFeed */,
 				845F3B432E15552D000163B4 /* ImageFeedUITests */,
-				845F3B4D2E155534000163B4 /* ImageFeedTests */,
-				848E27282E04216B0027436B /* ImageFeed */,
 			);
 			name = ImageFeed;
 			packageProductDependencies = (
