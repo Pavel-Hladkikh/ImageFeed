@@ -26,13 +26,9 @@ final class SingleImageViewController: UIViewController {
         rescaleAndCenterImageInScrollView(image: image)
     }
     
-    
-    
-    
     @IBAction private func didTapBackButton() {
         dismiss(animated: true, completion: nil)
     }
-    
    
     @IBAction func didTapShareButton(_ sender: UIButton) {
         guard let image else { return }
@@ -42,10 +38,6 @@ final class SingleImageViewController: UIViewController {
         )
         present(share, animated: true, completion: nil)
     }
-
-    
-    
-    
     
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
         let minZoomScale = scrollView.minimumZoomScale
