@@ -37,7 +37,6 @@ final class ImagesListViewController: UIViewController {
             super.prepare(for: segue, sender: sender)
         }
     }
-
     
     private func configCell(for cell: ImagesListCell,
                             with indexPath: IndexPath) {

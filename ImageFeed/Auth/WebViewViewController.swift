@@ -16,18 +16,20 @@ final class WebViewViewController: UIViewController {
     @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
     
+    private var estimatedProgressObservation: NSKeyValueObservation?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("[WebViewViewController.viewDidLoad]: loaded")
         
         webView.navigationDelegate = self
-        
         loadAuthView()
-        
-        updateProgress()
+        observeProgress()
     }
     
     private func loadAuthView() {
         guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
+            print("[WebViewViewController.loadAuthView]: invalid base URL")
             return
         }
         
@@ -39,40 +41,29 @@ final class WebViewViewController: UIViewController {
         ]
         
         guard let url = urlComponents.url else {
+            print("[WebViewViewController.loadAuthView]: failed to build auth URL")
             return
         }
         
         let request = URLRequest(url: url)
+        print("[WebViewViewController.loadAuthView]: loading \(url.absoluteString)")
         webView.load(request)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        webView.addObserver(
-            self,
-            forKeyPath: #keyPath(WKWebView.estimatedProgress),
-            options: .new,
-            context: nil)
-        updateProgress()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
-    }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == #keyPath(WKWebView.estimatedProgress) {
-            updateProgress()
-        } else {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+    private func observeProgress() {
+        estimatedProgressObservation = webView.observe(
+            \.estimatedProgress,
+             options: []
+        ) { [weak self] _, _ in
+            self?.updateProgress()
         }
     }
     
     private func updateProgress() {
-        progressView.progress = Float(webView.estimatedProgress)
+        let progress = Float(webView.estimatedProgress)
+        progressView.progress = progress
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
+        print("[WebViewViewController.updateProgress]: \(progress * 100)%")
     }
 }
 
@@ -83,6 +74,7 @@ extension WebViewViewController: WKNavigationDelegate {
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
         if let code = code(from: navigationAction) {
+            print("[WebViewViewController.decidePolicy]: found auth code: \(code)")
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
             decisionHandler(.cancel)
         } else {
@@ -93,12 +85,18 @@ extension WebViewViewController: WKNavigationDelegate {
     private func code(from navigationAction: WKNavigationAction) -> String? {
         guard
             let url = navigationAction.request.url,
-            let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-            components.path == "/oauth/authorize/native",
-            let queryItems = components.queryItems
+            let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         else {
+            print("[WebViewViewController.code]: invalid navigationAction URL")
             return nil
         }
-        return queryItems.first(where: { $0.name == "code" })?.value
+        
+        if components.path == "/oauth/authorize/native",
+           let queryItems = components.queryItems,
+           let code = queryItems.first(where: { $0.name == "code" })?.value {
+            return code
+        }
+        
+        return nil
     }
 }
