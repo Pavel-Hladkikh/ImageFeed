@@ -36,6 +36,13 @@ final class ProfileService {
     
     private(set) var profile: Profile?
     
+    func reset() {
+        task?.cancel()
+        task = nil
+        lastToken = nil
+        profile = nil
+    }
+    
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         assert(Thread.isMainThread, "fetchProfile must be called on main thread")
         
@@ -99,3 +106,4 @@ final class ProfileService {
         return request
     }
 }
+

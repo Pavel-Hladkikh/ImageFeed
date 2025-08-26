@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <color key="backgroundColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="285" id="1ah-iU-DJx" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="285" id="1ah-iU-DJx" customClass="ImagesListCell" customModule="ImageFeed">
                                         <rect key="frame" x="0.0" y="50" width="393" height="285"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1ah-iU-DJx" id="3Ng-TA-aZl">
@@ -46,6 +46,9 @@
                                                     </constraints>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" title="Button" image="LikeOn"/>
+                                                    <connections>
+                                                        <action selector="likeButtonTapped:" destination="1ah-iU-DJx" eventType="touchUpInside" id="sjZ-wg-epi"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KxH-VE-B0U">
                                                     <rect key="frame" x="24" y="255" width="89" height="18"/>
@@ -77,7 +80,7 @@
                                         <connections>
                                             <outlet property="cellImageView" destination="Mpo-zH-MiI" id="LeX-Fv-o9P"/>
                                             <outlet property="dateLabel" destination="KxH-VE-B0U" id="zcl-aL-xvo"/>
-                                            <outlet property="likeButton" destination="inz-Eb-nO9" id="1Wr-Kp-74j"/>
+                                            <outlet property="likeButton" destination="inz-Eb-nO9" id="iqK-qA-dCX"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
