@@ -18,6 +18,13 @@ final class ProfileImageService {
     
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
+    func reset() {
+        task?.cancel()
+        task = nil
+        lastUsername = nil
+        avatarURL = nil
+    }
+    
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     private var lastUsername: String?

@@ -1,4 +1,5 @@
 import UIKit
+import WebKit
 
 final class SplashViewController: UIViewController {
     
@@ -38,18 +39,25 @@ final class SplashViewController: UIViewController {
     }
     
     private func presentAuth() {
-        let storyboard = UIStoryboard(name: "Main", bundle: .main)
-        guard let authVC = storyboard.instantiateViewController(
-            withIdentifier: "AuthViewController"
-        ) as? AuthViewController else {
-            assertionFailure("AuthViewController not found by Storyboard ID")
-            return
+        WKWebsiteDataStore.default().removeData(
+            ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+            modifiedSince: .distantPast
+        ) { [weak self] in
+            guard let self else { return }
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: .main)
+            guard let authVC = storyboard.instantiateViewController(
+                withIdentifier: "AuthViewController"
+            ) as? AuthViewController else {
+                assertionFailure("AuthViewController not found by Storyboard ID")
+                return
+            }
+            authVC.delegate = self
+            
+            let nav = UINavigationController(rootViewController: authVC)
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true)
         }
-        authVC.delegate = self
-        
-        let nav = UINavigationController(rootViewController: authVC)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
     }
     
     private func switchToTabBarController() {
@@ -69,7 +77,6 @@ final class SplashViewController: UIViewController {
             guard let self else { return }
             switch result {
             case .success(let profile):
-                
                 ProfileImageService.shared.fetchProfileImageURL(username: profile.username) { _ in }
                 UIBlockingProgressHUD.dismiss()
                 self.switchToTabBarController()
@@ -77,7 +84,6 @@ final class SplashViewController: UIViewController {
             case .failure(let error):
                 UIBlockingProgressHUD.dismiss()
                 print("❌ Профиль: ошибка получения —", error)
-                
                 self.presentAuth()
             }
         }
@@ -95,3 +101,4 @@ extension SplashViewController: AuthViewControllerDelegate {
         }
     }
 }
+
