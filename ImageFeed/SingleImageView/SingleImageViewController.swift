@@ -89,6 +89,12 @@ final class SingleImageViewController: UIViewController {
         let insetY = max(0, (bounds.height - content.height) / 2)
         
         scrollView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
+        if content.width > bounds.width {
+            scrollView.contentOffset.x = (content.width - bounds.width) / 2
+        }
+        if content.height > bounds.height {
+            scrollView.contentOffset.y = (content.height - bounds.height) / 2
+        }
     }
 }
 

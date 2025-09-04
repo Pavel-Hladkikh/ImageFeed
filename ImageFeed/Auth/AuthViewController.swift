@@ -1,7 +1,7 @@
 import UIKit
 
 protocol AuthViewControllerDelegate: AnyObject {
-    func didAuthenticate(_ vc: AuthViewController)
+    func didAuthenticate(_ viewController: AuthViewController)
 }
 
 final class AuthViewController: UIViewController {
@@ -23,6 +23,12 @@ final class AuthViewController: UIViewController {
                 assertionFailure("[AuthViewController.prepare]: failed to cast destination to WebViewViewController")
                 return
             }
+            
+            let authHelper = AuthHelper()
+            let webViewPresenter = WebViewPresenter(authHelper: authHelper) 
+            webViewViewController.presenter = webViewPresenter
+            webViewPresenter.view = webViewViewController
+            
             webViewViewController.delegate = self
             print("[AuthViewController.prepare]: segue to WebViewViewController set up")
         } else {
@@ -38,22 +44,22 @@ final class AuthViewController: UIViewController {
     }
     
     private func showLoginErrorAlert() {
-        let alert = UIAlertController(
+        let alertController = UIAlertController(
             title: "Что-то пошло не так",
             message: "Не удалось войти в систему",
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: "Ок", style: .default))
-        present(alert, animated: true)
+        alertController.addAction(UIAlertAction(title: "Ок", style: .default))
+        present(alertController, animated: true)
     }
 }
 
 extension AuthViewController: WebViewViewControllerDelegate {
-    func webViewViewController(_ vc: WebViewViewController,
+    func webViewViewController(_ viewController: WebViewViewController,
                                didAuthenticateWithCode code: String) {
         print("[AuthViewController.webViewViewController]: received code: \(code)")
         
-        vc.dismiss(animated: true) { [weak self] in
+        viewController.dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             
             UIBlockingProgressHUD.show()
@@ -75,8 +81,8 @@ extension AuthViewController: WebViewViewControllerDelegate {
         }
     }
     
-    func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
+    func webViewViewControllerDidCancel(_ viewController: WebViewViewController) {
         print("[AuthViewController.webViewViewControllerDidCancel]: user cancelled auth")
-        vc.dismiss(animated: true)
+        viewController.dismiss(animated: true)
     }
 }
