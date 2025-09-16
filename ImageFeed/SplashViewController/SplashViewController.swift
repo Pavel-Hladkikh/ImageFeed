@@ -23,6 +23,10 @@ final class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        if ProcessInfo.processInfo.arguments.contains("UITests") {
+            ProfileLogoutService.shared.logout()
+        }
+        
         if let token = storage.token {
             fetchProfile(token: token)
         } else {

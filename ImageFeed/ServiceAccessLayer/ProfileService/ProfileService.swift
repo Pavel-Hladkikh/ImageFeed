@@ -27,6 +27,8 @@ struct Profile {
 
 final class ProfileService {
     
+    static let didChangeNotification = Notification.Name("ProfileService.didChange")
+    
     static let shared = ProfileService()
     private init() {}
     
@@ -47,7 +49,6 @@ final class ProfileService {
         assert(Thread.isMainThread, "fetchProfile must be called on main thread")
         
         guard lastToken != token else {
-            print("[ProfileService.fetchProfile]: duplicate request with same token")
             completion(.failure(ProfileServiceError.invalidRequest))
             return
         }
@@ -56,7 +57,6 @@ final class ProfileService {
         lastToken = token
         
         guard let request = makeProfileRequest(token: token) else {
-            print("[ProfileService.fetchProfile]: failed to build request")
             completion(.failure(NetworkError.invalidRequest))
             lastToken = nil
             return
@@ -69,10 +69,15 @@ final class ProfileService {
             case .success(let dto):
                 let profile = self.makeProfile(from: dto)
                 self.profile = profile
+                
+                NotificationCenter.default.post(
+                    name: ProfileService.didChangeNotification,
+                    object: self
+                )
+                
                 completion(.success(profile))
                 
             case .failure(let error):
-                print("[ProfileService.fetchProfile]: network error - \(error.localizedDescription), token: \(token)")
                 completion(.failure(error))
             }
             
@@ -106,4 +111,5 @@ final class ProfileService {
         return request
     }
 }
+
 

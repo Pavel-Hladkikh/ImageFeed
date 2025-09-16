@@ -3,6 +3,7 @@ import UIKit
 final class LoadingGradientView: UIView {
     
     private let animKey = "locationsChange"
+    
     override class var layerClass: AnyClass { CAGradientLayer.self }
     
     override init(frame: CGRect) {
@@ -18,6 +19,7 @@ final class LoadingGradientView: UIView {
     private func setup() {
         isUserInteractionEnabled = false
         backgroundColor = .clear
+        
         guard let g = layer as? CAGradientLayer else { return }
         g.colors = [
             UIColor(red: 0.682, green: 0.686, blue: 0.706, alpha: 1).cgColor,
@@ -34,8 +36,8 @@ final class LoadingGradientView: UIView {
         guard layer.animation(forKey: animKey) == nil else { return }
         let a = CABasicAnimation(keyPath: "locations")
         a.fromValue = [0, 0.1, 0.3]
-        a.toValue   = [0, 0.8, 1]
-        a.duration = 1.0
+        a.toValue   = [0.7, 0.9, 1.1]
+        a.duration = 1.2
         a.repeatCount = .infinity
         a.isRemovedOnCompletion = false
         layer.add(a, forKey: animKey)
@@ -57,7 +59,7 @@ extension UIView {
     
     @discardableResult
     func addLoadingGradient(cornerRadius: CGFloat = 0) -> LoadingGradientView {
-        let v = LoadingGradientView(frame: bounds)
+        let v = LoadingGradientView(frame: .zero)
         v.translatesAutoresizingMaskIntoConstraints = false
         addSubview(v)
         NSLayoutConstraint.activate([
@@ -83,16 +85,18 @@ extension UIView {
         addSubview(v)
         
         var cs: [NSLayoutConstraint] = [
-            v.leadingAnchor.constraint(equalTo: leadingAnchor),
             v.widthAnchor.constraint(equalToConstant: width),
-            v.heightAnchor.constraint(equalToConstant: height)
+            v.heightAnchor.constraint(equalToConstant: height),
+            v.leadingAnchor.constraint(equalTo: leadingAnchor)
         ]
+        
         switch align {
         case .center:
             cs.append(v.centerYAnchor.constraint(equalTo: centerYAnchor))
         case .top:
             cs.append(v.topAnchor.constraint(equalTo: topAnchor))
         }
+        
         NSLayoutConstraint.activate(cs)
         
         v.layer.cornerRadius = cornerRadius
@@ -100,8 +104,3 @@ extension UIView {
         return v
     }
 }
-
-
-
-
-
